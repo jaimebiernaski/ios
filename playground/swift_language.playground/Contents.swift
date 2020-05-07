@@ -41,6 +41,28 @@ for _ in 0...5 {
 print(password)
 
 
+// Functions
+var name:String = "Bob";
+
+func greetings () {
+    print("Hello")
+}
+
+func greetings2 (name: String) {
+    print("Hello \(name)")
+}
+
+for _ in 0...1 {
+    greetings2(name: name)
+}
+    
+var f = 3.4
+
+
+
+ 
+
+
 
 
 
