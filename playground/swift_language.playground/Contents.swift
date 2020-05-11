@@ -59,11 +59,61 @@ for _ in 0...1 {
 var f = 3.4
 
 
+// IF, ELSE & SWITCH
 
+func loveCalculator() {
+    let loveScore = Int.random(in: 0...100)
+    
+    if loveScore > 80 {
+        print("You love each other like Kanyes loves Kanye")
+    } else if loveScore > 40 {
+        print ("You go together like Coke and Mentos")
+    } else {
+        print ("You will be forever alone")
+    }
+    print(loveScore)
+}
+
+loveCalculator()
  
 
+func loveCalculator2() {
+    let loveScore = Int.random(in: 0...100)
+    
+    switch loveScore {
+    case 80...100:
+        print("You love each other like Kanyes loves Kanye")
+    case 40..<80:
+        print ("You go together like Coke and Mentos")
+    case ...40:
+        print ("You will be forever alone")
+    default:
+        print ("Impossible, out or range")
+    }
+    print(loveScore)
+}
+
+loveCalculator2()
 
 
+
+
+//OPTIONALS !? > Safety check
+
+//var player1Username: String =  nil << Warning
+var player1Username: String? =  nil
+player1Username = "Jack"
+print(player1Username)
+
+
+let studentsAndscores = ["Amy": 88, "James": 55, "Helen": 99]
+var highScore: Int? = nil
+studentsAndscores.forEach { (key: String, value: Int) in
+    if highScore == nil || value > highScore! {
+        highScore = value
+    }
+}
+print("High Score is \(highScore!)")
 
 
 
