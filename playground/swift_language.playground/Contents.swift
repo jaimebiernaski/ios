@@ -18,7 +18,7 @@ var dictionary = [ "name": "John" ]
 // String interpolation
 var a = 2
 var b = 3
-print("Hello World! \(a) + \(b) = \(a+b)")
+//print("Hello World! \(a) + \(b) = \(a+b)")
 
 // Array
 var numbers = [1,2,3,4]
@@ -38,19 +38,26 @@ for _ in 0...5 {
     password += alphabet[Int.random(in: 0..<alphabet.count)];
 }
 
-print(password)
+//print(password)
 
 
 // Functions
 var name:String = "Bob";
 
 func greetings () {
-    print("Hello")
+//    print("Hello")
 }
 
 func greetings2 (name: String) {
-    print("Hello \(name)")
+//    print("Hello \(name)")
 }
+
+func greetings3() -> String {
+    return "Hello World"
+}
+
+//print(greetings3())
+
 
 for _ in 0...1 {
     greetings2(name: name)
@@ -65,13 +72,13 @@ func loveCalculator() {
     let loveScore = Int.random(in: 0...100)
     
     if loveScore > 80 {
-        print("You love each other like Kanyes loves Kanye")
+//        print("You love each other like Kanyes loves Kanye")
     } else if loveScore > 40 {
-        print ("You go together like Coke and Mentos")
+//        print ("You go together like Coke and Mentos")
     } else {
-        print ("You will be forever alone")
+//        print ("You will be forever alone")
     }
-    print(loveScore)
+//    print(loveScore)
 }
 
 loveCalculator()
@@ -93,7 +100,7 @@ func loveCalculator2() {
     print(loveScore)
 }
 
-loveCalculator2()
+//loveCalculator2()
 
 
 
@@ -103,7 +110,7 @@ loveCalculator2()
 //var player1Username: String =  nil << Warning
 var player1Username: String? =  nil
 player1Username = "Jack"
-print(player1Username)
+//print(player1Username)
 
 
 let studentsAndscores = ["Amy": 88, "James": 55, "Helen": 99]
@@ -113,7 +120,37 @@ studentsAndscores.forEach { (key: String, value: Int) in
         highScore = value
     }
 }
-print("High Score is \(highScore!)")
+//print("High Score is \(highScore!)")
+
+
+
+
+
+// STRUCTS
+print("STRUCTS")
+
+struct Town {
+    let name: String
+    var citizens: [String]
+    var resources: [String:Int]
+    
+    init(name:String, citizens:[String], resources:[String:Int]){
+        self.name = name
+        self.citizens = citizens
+        self.resources = resources
+    }
+    
+    func fortify() {
+        print("Defenses increased")
+    }
+}
+
+var letterTown = Town(name: "Letters Town", citizens: ["A","B"], resources: ["Math": 10])
+var numberTown = Town(name: "Numbers Town", citizens: ["1","2"], resources: ["Math": 100])
+
+print(letterTown)
+numberTown.citizens.append("3")
+print(numberTown)
 
 
 
