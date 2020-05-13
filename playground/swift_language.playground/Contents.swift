@@ -127,32 +127,161 @@ studentsAndscores.forEach { (key: String, value: Int) in
 
 
 // STRUCTS
-print("STRUCTS")
+// on copy, structs passes VALUE (real copy)
+//print("STRUCTS")
 
 struct Town {
     let name: String
     var citizens: [String]
     var resources: [String:Int]
+    var defense: Int
     
-    init(name:String, citizens:[String], resources:[String:Int]){
+    init(name:String, citizens:[String], resources:[String:Int], defense: Int){
         self.name = name
         self.citizens = citizens
         self.resources = resources
+        self.defense = defense
     }
     
-    func fortify() {
+    mutating func fortify() {
         print("Defenses increased")
+        defense += 10
     }
 }
 
-var letterTown = Town(name: "Letters Town", citizens: ["A","B"], resources: ["Math": 10])
-var numberTown = Town(name: "Numbers Town", citizens: ["1","2"], resources: ["Math": 100])
+var letterTown = Town(name: "Letters Town", citizens: ["A","B"], resources: ["Math": 10], defense: 80)
+var numberTown = Town(name: "Numbers Town", citizens: ["1","2"], resources: ["Math": 100], defense: 50)
 
-print(letterTown)
+//print(letterTown)
 numberTown.citizens.append("3")
-print(numberTown)
+//print(numberTown)
+
+//CLASSES
+// on copy, classes passes REFERENCE (point to same object)
+
+print("CLASSES")
+class Enemy {
+    var health: Int
+    var attackStrength: Int
+    
+    init(health: Int, attackStrength: Int) {
+        self.health = health
+        self.attackStrength = attackStrength
+    }
+    
+    func move() {
+        print("Walk fowards")
+    }
+    
+    func attack() {
+        print("Land a hit, does \(attackStrength) damage.")
+    }
+    
+    func takeDamage(amount: Int){
+        health -= amount
+    }
+}
 
 
+class Dragon: Enemy { //inheritance
+    var wingSpan = 2
+    func talk(speech:String) {
+        print("Says: \(speech)")
+        
+    }
+    override func move() { //replace func behaviour
+        print("Fly fowards")
+    }
+    
+    override func attack() {
+        super.attack() //trigger attack frmo supeprclass
+        print("Spits fires, does 10 damage")
+    }
+}
+
+
+let skeleton = Enemy(health: 100, attackStrength: 10)
+print("Skeleton Health:",skeleton.health)
+skeleton.attack()
+skeleton.move()
+
+let dragon = Dragon(health: 100, attackStrength: 15)
+print("Dragon Health:", dragon.health)
+dragon.talk(speech: "My teeth are swords! My claws are spears! My wings are a hurricane")
+dragon.wingSpan = 50
+dragon.attackStrength = 15
+dragon.move()
+dragon.attack()
+
+
+/*
+ https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes
+ 
+ Choosing Between Structures and Classes
+ Decide how to store data and model behavior.
+
+ Structures and classes are good choices for storing data and modeling behavior in your apps,
+ but their similarities can make it difficult to choose one over the other.
+
+ Consider the following recommendations to help choose which option makes sense when adding a new data type to your app.
+
+  - Use structures by default.
+
+  - Use classes when you need Objective-C interoperability.
+
+  - Use classes when you need to control the identity of the data you're modeling.
+
+  - Use structures along with protocols to adopt behavior by sharing implementations.
+ 
+ STRUCTS
+    - are immutable
+    - passes by VALUE
+ 
+ CLASSES
+    - passes by REFERENCE
+    - Inhreritance
+ 
+ more details at: https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html
+ 
+ */
+
+//OPTIONAL Deep Diving
+
+let optional: String? = nil
+let defaultValue = "asdf"
+
+// 1) Force Unwrapping
+var text:String = optional!
+
+// 2) Check for nil value
+if optional != nil {
+    text = optional!
+}
+
+// 3) Optional Binding
+if let safeOptional = optional {
+    text = safeOptional
+}
+
+// 4) Nil Coalescing Operator
+text = optional ?? defaultValue
+
+// 5 Optinal Chaining
+struct OptionalStruct {
+   var property = 123
+    func method(){
+        print("Im a struct")
+    }
+}
+
+var optionalStruct: OptionalStruct?
+
+optionalStruct = nil
+optionalStruct?.property
+optionalStruct?.method()
+
+optionalStruct = OptionalStruct()
+optionalStruct?.method()
 
 
 
