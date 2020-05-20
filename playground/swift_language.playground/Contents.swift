@@ -2,6 +2,8 @@
     SWIFT
 ************ */
 
+import UIKit
+
 var variable = "This may changes over time"
 let constant = "This does not change over time"
 
@@ -283,5 +285,277 @@ optionalStruct?.method()
 optionalStruct = OptionalStruct()
 optionalStruct?.method()
 
+//PROTOCOLS
 
+
+
+protocol CanFly {
+    func fly()
+}
+
+class Bird {
+    var isFemale = true
+    
+    func layEgg() {
+        if isFemale {
+            print("The bird makes a new bird in a shell.")
+        }
+    }
+    
+}
+
+class Eagle: Bird, CanFly {
+    func soar() {
+        print("The eagles glides in the air using air currents.")
+    }
+    func fly() {
+        print("The Eagle flaps its wings and lifts off in the sky.")
+    }
+}
+
+class Penguin: Bird {
+    func swin() {
+        print("The penguin paddles throught the water")
+    }
+}
+
+struct flyingMuseum {
+    func flyingDemo (flyingObject: CanFly) {
+        flyingObject.fly()
+    }
+}
+
+struct Airplane: CanFly {
+     func fly() {
+        print("The airlnae flyes using its engines")
+    }
+}
+
+let myEagle = Eagle()
+myEagle.fly()
+myEagle.soar()
+
+let myPenguin = Penguin()
+myPenguin.swin()
+
+let myPlane = Airplane()
+
+let museum = flyingMuseum()
+museum.flyingDemo(flyingObject: myEagle)
+museum.flyingDemo(flyingObject: myPlane)
+//museum.flyingDemo(flyingObject: myPenguin)
+
+
+//PROTOCOLS & DELEGATES
+
+/**
+ Protocls defines expexted requirements
+ 
+ Anallogy
+ 
+1 - There is the EMERGENCY CALL HANDLER
+    That send message to a BLEP about an emergency event
+        In order to be a carry blep , the person must to have complete te ALS - advance life support course,
+        to know how to RESUCITATE somebody using methods as CPR.
+        The call handler do not care whos is the Blep carrier, because knows, the person adopts the  ADVANCE LIFE SUPPORT  protocol
+    
+2 - The PARAMEDIC Peter Is on shit to carry the blep
+3 - In  a emegercy situation the EmergencyCallHandler sender a message to TRIGGER the  Blep with and information: You must go here and perform the CPR
+4 - Peter goes and do that action, and he can do because has the ALS course, what makes he follows the AdvanceLifeSupport protocol
+5 - The next person who assumes the Blep, (Paramedic, Doctor, Surgeon) follows the same process, the Call Handler  dont cares whos care the blep
+ 
+ 
+            
+ */
+
+//main.swift
+protocol AdvanceLifeSupport {
+    func perfomCPR()
+}
+ 
+class EmergencyCallHandler {
+    var delegate: AdvanceLifeSupport?
+    
+    func assessSituation(){
+        print("Can you tell me what happened?")
+    }
+    
+    func medicalEmergency() {
+        delegate?.perfomCPR()
+    }
+}
+
+struct Paramedic: AdvanceLifeSupport {
+    
+    init(handler: EmergencyCallHandler) {
+        handler.delegate = self
+    }
+    
+    func perfomCPR() {
+        print("The paramedic does chest compressions, 30 per second.")
+    }
+}
+
+class Doctor: AdvanceLifeSupport {
+    init(handler: EmergencyCallHandler){
+        handler.delegate = self
+    }
+    
+    func perfomCPR() {
+        print("The Doctor does chest compressions, 30 per second.")
+    }
+    
+    func useStethescope() {
+        print("Listening for heart sounds")
+    }
+}
+
+class Surgeon: Doctor {
+    
+    override func perfomCPR() {
+        super.perfomCPR()
+        print("Sings stayjbing alive by the BeeGees")
+    }
+    
+    func useEletricDrill() {
+        print("Whirr...")
+    }
+
+}
+
+//
+
+let emilio = EmergencyCallHandler()
+//let peter = Paramedic(handler: emilio)
+let angela = Surgeon(handler: emilio)
+
+emilio.assessSituation()
+emilio.medicalEmergency()
+
+
+
+// CLOSURES
+
+/**
+ Closures are essentially anonimous functions (without a name)
+ https://docs.swift.org/swift-book/LanguageGuide/Closures.html
+ */
+
+import UIKit
+
+func calcutalor(n1: Int, n2:Int, operation: (Int, Int) -> Int) -> Int {
+    return operation(n1, n2)
+}
+
+//(Int, Int) -> Int
+func add(n1: Int, n2:Int) -> Int {
+    return n1+n2
+}
+
+func multiply(n1: Int, n2:Int) -> Int {
+    return n1*n2
+}
+
+
+
+calcutalor(n1: 1, n2: 2, operation: add)
+calcutalor(n1: 2, n2: 3, operation: multiply)
+
+func calcutalorWithClosure(n1: Int, n2:Int, operation: (Int, Int) -> Int) -> Int {
+    return operation(n1, n2)
+}
+
+/**
+ 
+ // FROM
+ func add(n1: Int, n2:Int) -> Int {
+     return n1+n2
+ }
+ // TO
+ { (n1: Int, n2:Int) -> Int in
+     return n1+n2
+ }
+ 
+ */
+
+calcutalorWithClosure(n1: 1, n2: 2, operation: { (n1: Int, n2:Int) -> Int in return n1+n2 })
+var result = calcutalorWithClosure(n1: 2, n2: 3, operation: {$0 * $1})
+print("1 > ",result)
+
+//With trailling closure
+result = calcutalorWithClosure(n1: 3, n2: 4){$0 * $1}
+print("2 > ",result)
+
+///////////////////
+
+array = [6,2,3,9,4,1]
+func addOne (n: Int) -> Int {
+    return n+1
+}
+array.map(addOne)
+
+let result3 = array.map{$0+1}
+print("3 > ",result3)
+
+let result4 = array.map{"\($0)"}
+print("4 > ",result4)
+
+// Computed properties
+var parameter = 1
+var aProperty: String {
+    switch parameter {
+    case 1:
+        return "It is one"
+    default:
+        return "It diferent of one"
+    }
+}
+
+print(aProperty)
+;
+
+//Paramenter Name
+var test = 1
+func myFunc (name eman: Int) {
+    print(eman)
+}
+myFunc(name: 1)
+
+//EXTENSIONS
+
+//import UIKit
+
+//extension Double {
+//    func round(to places: Int) -> Double{
+//        let precisionNumber = pow(10, Double(places))
+//        var n = self
+//        n = n * precisionNumber
+//        n.round()
+//        n =  n / precisionNumber
+//        return n
+//    }
+//}
+//
+//var myDouble = 3.14159
+//let myRoundedDouble = String(format: "%.1f", myDouble)
+////myDouble.round()
+//myDouble.round(to: 3)
+
+
+//Extending proprietary Classes
+let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height:50))
+button.backgroundColor = .red
+button.layer.cornerRadius = 25
+button.clipsToBounds = true
+
+extension UIButton {
+    func makeCircular() {
+        self.layer.cornerRadius = self.frame.size.width / 2
+        self.clipsToBounds = true
+    }
+}
+
+let button2 = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height:50))
+button2.backgroundColor = .green
+button2.makeCircular()
 
